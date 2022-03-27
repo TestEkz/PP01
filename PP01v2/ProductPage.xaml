@@ -1,0 +1,78 @@
+﻿<Page x:Class="PP01v2.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PP01v2"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductPage" IsVisibleChanged="Page_IsVisibleChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="87*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Поиск: " Width="70" TextAlignment="Right"/>
+                <TextBox Name="TBoxSearch" Width="200" Height="20" TextChanged="TBoxSearch_TextChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Производитель: " Width="100" TextAlignment="Right"/>
+                <ComboBox Width="150" Name="ComboManuf" Height="20" SelectionChanged="ComboManuf_SelectionChanged"
+                          DisplayMemberPath="Name"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Сортировка: " Width="100" TextAlignment="Right"/>
+                <ComboBox Width="160" Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged">
+                    <ComboBoxItem Content="Название по возрастанию"/>
+                    <ComboBoxItem Content="Название по убыванию"/>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+        <ListView Grid.Row="1" Name="LViewProd" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  MouseDoubleClick="LViewProd_MouseDoubleClick">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="20" Width="200">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="200" Grid.Row="0" Stretch="Fill" HorizontalAlignment="Center" Margin="5">
+                            <Image.Source>
+                                <Binding Path="MainImagePath">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>Resources/picture.png</ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" TextAlignment="Center" Width="180"
+                                   TextWrapping="Wrap" HorizontalAlignment="Center" Margin="5 5" FontSize="14" Grid.Row="1"/>
+                        <TextBlock Text="{Binding Cost, StringFormat={}{0:N2} руб.}" Grid.Row="2" Margin="5 5 5 15" HorizontalAlignment="Center"
+                                   FontSize="16"/>
+                        <TextBlock Text="{Binding ActiveTxt}" Grid.Row="3" FontSize="14" HorizontalAlignment="Center"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Добавить"
+                Name="BtnAdd" Click="BtnAdd_Click"/>
+        <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Content="История продаж"
+                Name="BtnSale" Click="BtnSale_Click"/>
+        <Button Grid.Row="2" HorizontalAlignment="Left" Margin="170 0 0 0" VerticalAlignment="Center" Content="Удалить"
+                Name="BtnDelete" Click="BtnDelete_Click"/>
+        <Label Grid.Row="2" Name="LabCount" Width="100" HorizontalAlignment="Right" Margin="0 0 200 0" 
+               VerticalAlignment="Center" FontSize="14" Content="100 из 100"/>
+    </Grid>
+</Page>
